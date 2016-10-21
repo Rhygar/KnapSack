@@ -46,9 +46,44 @@ public class FillTheKnapSack {
 			System.out.println("Value: " + i.getValue() + ", Weight: " + i.getWeight() + ", Benefit: " + i.getBenefit());
 		}
 	}
+	
+	public void greedAlg() {
+		Item bestItem;
+		while(!items.isEmpty()) {
+			
+			bestItem = getBestBenefitItem(this.items);
+			double returnValue = -1;
+			int index = 0;
+			while(returnValue == -1 && index < knapSacks.length) {
+				returnValue = knapSacks[index].addItem(Double.toString(bestItem.getValue()), bestItem);
+				index++;
+			}
+			if(returnValue == -1) {
+				System.out.println("Item did not fit in any knapsack!");
+			} else {
+				System.out.println("Item was added to knapsack: " + knapSacks[index-1]);
+			}
+			items.remove(bestItem);
+			
+		}
+	}
+	
+	public Item getBestBenefitItem(ArrayList<Item> items) {
+		double highestBenefit = 0;
+		Item highestBenefitItem = null;
+		for(Item i : items) {
+			if(i.getBenefit() > highestBenefit) {
+				highestBenefit = i.getBenefit();
+				highestBenefitItem = i;
+			}
+		}
+		return highestBenefitItem;
+	}
+	
 	public static void main(String []args) throws IOException {
 		FillTheKnapSack prog = new FillTheKnapSack();
 		prog.printSacks();
 		prog.printItems();
+		prog.greedAlg();
 	}
 }
