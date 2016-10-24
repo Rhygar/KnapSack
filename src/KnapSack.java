@@ -7,12 +7,12 @@ public class KnapSack {
 //	private Item[] items;
 	private double maxWeight, currentWeight = 0, currentValue = 0;
 //	private HashMap<String, Item> items;
-	private ArrayList<Item> items;
+	private ArrayList<Item> items = new ArrayList<Item>();
 	private int knapSackNbr;
 	
 	public KnapSack(double maxWeight, int knapSackNbr) {
 //		items = new HashMap<>();
-		items = new ArrayList<Item>();
+//		items = new ArrayList<Item>();
 		this.maxWeight = maxWeight;
 		this.knapSackNbr = knapSackNbr;
 	}
@@ -25,6 +25,12 @@ public class KnapSack {
 			return currentWeight;
 		}
 		return -1;
+	}
+	
+	public void remove(Item item) {
+		currentWeight -= item.getWeight();
+		currentValue  -= item.getValue();
+		items.remove(item);
 	}
 	
 	public ArrayList<Item> getItems() {
