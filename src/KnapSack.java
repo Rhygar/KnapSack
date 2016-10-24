@@ -1,49 +1,50 @@
+import java.util.ArrayList;
 import java.util.HashMap;
 
 
 public class KnapSack {
 
 //	private Item[] items;
-	private double maxWeight;
-	private HashMap<String, Item> items;
+	private double maxWeight, currentWeight = 0, currentValue = 0;
+//	private HashMap<String, Item> items;
+	private ArrayList<Item> items;
+	private int knapSackNbr;
 	
-	public KnapSack(double maxWeight) {
-		items = new HashMap<>();
+	public KnapSack(double maxWeight, int knapSackNbr) {
+//		items = new HashMap<>();
+		items = new ArrayList<Item>();
 		this.maxWeight = maxWeight;
+		this.knapSackNbr = knapSackNbr;
 	}
 	
-	public double addItem(String key, Item item) {
-		if(getCurrentWeight() + item.getWeight() < maxWeight) {
-			items.put(key, item);
-			return getCurrentWeight();
+	public double addItem(Item item) {
+		if(this.currentWeight + item.getWeight() <= maxWeight) {
+			items.add(item);
+			currentWeight += item.getWeight();
+			currentValue  += item.getValue();
+			return currentWeight;
 		}
 		return -1;
 	}
 	
-//	public Item[] getItems() {
-//		return this.items;
-//	}
+	public ArrayList<Item> getItems() {
+		return this.items;
+	}
 	
 	public double getMaxWeight() {
 		return this.maxWeight;
 	}
 	
+	public int getKnapSackNbr() {
+		return this.knapSackNbr;
+	}
+	
 	public double getCurrentWeight() {
-		double totalWeight = 0;
-//		if(!items.isEmpty()) {
-			for(String s : items.keySet()) {
-				totalWeight += items.get(s).getWeight();
-			}
-//		}
-		return totalWeight;
+		return currentWeight;
 	}
 	
 	public double getCurrentValue() {
-		double totalValue = 0;
-		for(String s : items.keySet()) {
-			totalValue += items.get(s).getValue();
-		}
-		return totalValue;
+		return currentValue;
 	}
 	
 	
