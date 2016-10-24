@@ -25,12 +25,14 @@ public class Neighbour {
 				currentKnapSack = k2;
 			}
 			knapSacks.add(currentKnapSack);
-			for(int i = 0; i < currentKnapSack.getItems().size(); i++) {
-				currentItem = currentKnapSack.getItems().get(i);
-//				knapSackMatrix[currentItem.getItemNbr()][currentKnapSack.getKnapSackNbr()] = 1;
-				totalWeight += currentItem.getWeight();
-				totalValue  += currentItem.getValue();
-			}
+			totalValue  += currentKnapSack.getCurrentValue();
+			totalWeight += currentKnapSack.getCurrentWeight();
+//			for(int i = 0; i < currentKnapSack.getItems().size(); i++) {
+//				currentItem = currentKnapSack.getItems().get(i);
+////				knapSackMatrix[currentItem.getItemNbr()][currentKnapSack.getKnapSackNbr()] = 1;
+//				totalWeight += currentItem.getWeight();
+//				totalValue  += currentItem.getValue();
+//			}
 		}
 	}
 	
