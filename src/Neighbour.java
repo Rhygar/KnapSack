@@ -24,7 +24,7 @@ public class Neighbour {
 			} else if(k2 != null && currentKnapSack.getKnapSackNbr() == k2.getKnapSackNbr()) {
 				currentKnapSack = k2;
 			}
-			knapSacks.add(currentKnapSack);
+			knapSacks.add(currentKnapSack.copy(currentKnapSack));
 			totalValue  += currentKnapSack.getCurrentValue();
 			totalWeight += currentKnapSack.getCurrentWeight();
 //			for(int i = 0; i < currentKnapSack.getItems().size(); i++) {

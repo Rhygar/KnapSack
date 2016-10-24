@@ -59,6 +59,9 @@ public class KnapSack {
 		return currentValue;
 	}
 	
+	public KnapSack copy(KnapSack k) {
+		return new KnapSack(k);
+	}
 	
 	
 }

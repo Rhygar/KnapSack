@@ -24,13 +24,14 @@ public class FillTheKnapSack {
 	}
 	
 	public Neighbour getBestNeighbour() {
+		//determine current total value
 		double bestTotalValue = new Neighbour(knapSacks, items, null, null).getTotalValue();
 		System.out.println("Total value is...:" + bestTotalValue);
 		double highestValueInNeighbours = bestTotalValue + 1;
-		//determine current total value
 		while(highestValueInNeighbours >= bestTotalValue) {
 			//determine neighbourhood
 			findNeighbours();
+			System.out.println("Number of found neighbours: " + neighbours.size());
 			//iterate through all points in neighbourhood and take the N(x) which is highest
 			highestValueInNeighbours = 0;
 			for(Neighbour N : this.neighbours) {
@@ -52,9 +53,9 @@ public class FillTheKnapSack {
 		neighbours = new ArrayList<Neighbour>();
 		
 		//for every knapsack
-		for(KnapSack k1 : cloneKnapSackList(knapSacks) ) {
+		for(KnapSack k1 : knapSacks) {
 			//for every knapsack
-			for(KnapSack k2 : cloneKnapSackList(knapSacks) ) {
+			for(KnapSack k2 : knapSacks) {
 				//if not looking at same knapsack
 				if(k1.getKnapSackNbr() != k2.getKnapSackNbr()) {
 					KnapSack tempK1 = cloneKnapSack(k1);
@@ -72,7 +73,7 @@ public class FillTheKnapSack {
 								if(tempK1.addItem(IL) != -1) {
 									//succeed! neighbour found
 									ArrayList<KnapSack> cloneKS = (ArrayList<KnapSack>) knapSacks.clone();
-									neighbours.add(new Neighbour(cloneKnapSackList(knapSacks), items, tempK1, tempK2));
+									neighbours.add(new Neighbour(knapSacks, items, tempK1, tempK2));
 									tempK1.remove(IL);
 								}
 							}
@@ -93,7 +94,7 @@ public class FillTheKnapSack {
 											//succeed! neighbour found
 //											neighbours.add(new Neighbour(knapSacks, items, tempK1, tempK2));
 											ArrayList<KnapSack> cloneKS = (ArrayList<KnapSack>) knapSacks.clone();
-											neighbours.add(new Neighbour(cloneKnapSackList(knapSacks), items, tempK1, tempK2));
+											neighbours.add(new Neighbour(knapSacks, items, tempK1, tempK2));
 											tempK1.remove(IL);
 										}
 									}
