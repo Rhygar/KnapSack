@@ -19,6 +19,9 @@ public class KnapSack {
 		this.maxWeight = k.getMaxWeight();
 		this.currentValue = k.getCurrentValue();
 		this.currentWeight = k.getCurrentWeight();
+//		for(Item i : k.getItems()) {
+//			this.items.add(i.copy(i));
+//		}
 		this.items = (ArrayList<Item>) k.getItems().clone();
 		this.knapSackNbr = k.getKnapSackNbr();
 	}

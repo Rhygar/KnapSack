@@ -32,15 +32,17 @@ public class FillTheKnapSack {
 			if(bestFoundSolution.getTotalValue() > currentSolution.getTotalValue()) {
 				currentSolution = bestFoundSolution;
 				System.out.println("UPDATED SOLUTION with total value: " + currentSolution.getTotalValue());
+				printKnapSacks(currentSolution.getKnapSacks());
 			}
 			findNeighbours(currentSolution);
+			System.out.println("Neighbours found: " + neighbours.size());
 			double highestValueInNeighbours = 0;
 			for(Neighbour N : this.neighbours) {
 				if(N.getTotalValue() > highestValueInNeighbours) {
 					highestValueInNeighbours = N.getTotalValue();
 					bestFoundSolution = N;
-					printKnapSacks(N.getKnapSacks());
-					printItemsLeft();
+//					printKnapSacks(N.getKnapSacks());
+//					printItemsLeft();
 				}
 			}
 		} while(bestFoundSolution.getTotalValue() > currentSolution.getTotalValue());
@@ -50,18 +52,23 @@ public class FillTheKnapSack {
 	
 	public void findNeighbours(Neighbour currentSolution) {
 		neighbours = new ArrayList<Neighbour>();
-		ArrayList<Item> itemsLeft = currentSolution.getItemsLeft();
+//		ArrayList<Item> itemsLeft = currentSolution.getItemsLeft();
 		ArrayList<KnapSack> knapSacks = currentSolution.getKnapSacks();
 		//for every knapsack
 		for(KnapSack k1 : knapSacks) {
 			//for every knapsack
 			for(KnapSack k2 : knapSacks) {
+				ArrayList<Item> itemsLeft = currentSolution.getItemsLeft();
 				//if not looking at same knapsack
 				if(k1.getKnapSackNbr() != k2.getKnapSackNbr()) {
+//					System.out.println("K1: " + k1.getKnapSackNbr());
+//					System.out.println("K2: " + k2.getKnapSackNbr());
 					KnapSack tempK1 = new KnapSack(k1);
 					KnapSack tempK2 = new KnapSack(k2);
 					//for every item in k1
 					for(int i = 0; i < tempK1.getItems().size(); i++) {
+						tempK1 = new KnapSack(k1);
+						tempK2 = new KnapSack(k2);
 						Item itemToMove = tempK1.getItems().get(i);
 						//try to add in k2
 						if(tempK2.addItem(itemToMove) != -1) {
@@ -81,6 +88,8 @@ public class FillTheKnapSack {
 							//for all items in k2 
 							for(int j = 0; j < tempK2.getItems().size();j++) {
 								//remove item
+								tempK2 = new KnapSack(k2);
+								tempK1 = new KnapSack(k1);
 								Item itemToRemove = tempK2.getItems().get(j);
 								tempK2.remove(itemToRemove);
 								//try again to add in k2
@@ -93,7 +102,6 @@ public class FillTheKnapSack {
 										if(tempK1.addItem(IL) != -1) {
 											//succeed! neighbour found
 //											neighbours.add(new Neighbour(knapSacks, items, tempK1, tempK2));
-											ArrayList<KnapSack> cloneKS = (ArrayList<KnapSack>) knapSacks.clone();
 											neighbours.add(new Neighbour(knapSacks, itemsLeft, IL, tempK1, tempK2));
 											tempK1.remove(IL);
 										}

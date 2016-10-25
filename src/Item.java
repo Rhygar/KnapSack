@@ -27,5 +27,9 @@ public class Item {
 		return this.itemNbr;
 	}
 	
+	public Item copy(Item i) {
+		return new Item(i.getItemNbr(), i.getValue(), i.getWeight());
+	}
+	
 	
 }
