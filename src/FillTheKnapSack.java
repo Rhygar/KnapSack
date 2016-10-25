@@ -9,6 +9,7 @@ public class FillTheKnapSack {
 	boolean firstLineInFile = true;
 	ArrayList<KnapSack> knapSacks = new ArrayList<KnapSack>();
 	ArrayList<Item> items = new ArrayList<Item>();
+	ArrayList<Item> allItems = new ArrayList<Item>();
 	ArrayList<Item> itemsLeft = new ArrayList<Item>();
 	ArrayList<Neighbour> neighbours;
 	Item itemAddedinNewBestNeighbour;
@@ -23,8 +24,8 @@ public class FillTheKnapSack {
 	}
 	
 	public Neighbour getBestNeighbour() {
-		Neighbour currentSolution = new Neighbour(knapSacks, itemsLeft, null, null, null);
-		Neighbour bestFoundSolution = new Neighbour(knapSacks, itemsLeft, null, null, null);
+		Neighbour currentSolution = new Neighbour(knapSacks, allItems, null, null);
+		Neighbour bestFoundSolution = new Neighbour(knapSacks, allItems, null, null);
 		System.out.println("Current value in sacks: " + currentSolution.getTotalValue());
 		//determine current total value
 		
@@ -79,8 +80,7 @@ public class FillTheKnapSack {
 								//try to add in k1
 								if(tempK1.addItem(IL) != -1) {
 									//succeed! neighbour found
-									ArrayList<KnapSack> cloneKS = (ArrayList<KnapSack>) knapSacks.clone();
-									neighbours.add(new Neighbour(knapSacks, itemsLeft, IL, tempK1, tempK2));
+									neighbours.add(new Neighbour(knapSacks, allItems, tempK1, tempK2));
 									tempK1.remove(IL);
 								}
 							}
@@ -101,8 +101,7 @@ public class FillTheKnapSack {
 										//try to add in k1
 										if(tempK1.addItem(IL) != -1) {
 											//succeed! neighbour found
-//											neighbours.add(new Neighbour(knapSacks, items, tempK1, tempK2));
-											neighbours.add(new Neighbour(knapSacks, itemsLeft, IL, tempK1, tempK2));
+											neighbours.add(new Neighbour(knapSacks, allItems, tempK1, tempK2));
 											tempK1.remove(IL);
 										}
 									}
@@ -216,7 +215,8 @@ public class FillTheKnapSack {
 				double itemValue = Double.parseDouble(splitString[1]);
 				double itemWeight = Double.parseDouble(splitString[2]);
 				//create Item with itemNumber, value and weight
-				items.add(new Item(itemNumber, itemValue, itemWeight)); 
+				items.add(new Item(itemNumber, itemValue, itemWeight));
+				allItems.add(new Item(itemNumber, itemValue, itemWeight));
 			}
 			
 		}

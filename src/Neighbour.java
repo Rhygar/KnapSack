@@ -12,9 +12,9 @@ public class Neighbour {
 	public Neighbour() {
 		
 	}
-	public Neighbour(ArrayList<KnapSack> ksList, ArrayList<Item> itemsLeft, Item newItem, KnapSack k1, KnapSack k2) {
+	public Neighbour(ArrayList<KnapSack> ksList, ArrayList<Item> allItems, KnapSack k1, KnapSack k2) {
 		KnapSack currentKnapSack;
-		this.itemsLeft = (ArrayList<Item>) itemsLeft.clone();
+		this.itemsLeft = (ArrayList<Item>) allItems.clone();
 		for(int k = 0; k < ksList.size(); k++) {
 			currentKnapSack = ksList.get(k);
 			if(k1 != null && currentKnapSack.getKnapSackNbr() == k1.getKnapSackNbr()) {
@@ -25,9 +25,19 @@ public class Neighbour {
 			knapSacks.add(currentKnapSack.copy(currentKnapSack));
 			totalValue  += currentKnapSack.getCurrentValue();
 			totalWeight += currentKnapSack.getCurrentWeight();
+			removeFromItemList(currentKnapSack);
 		}
 	}
 	
+	private void removeFromItemList(KnapSack k) {
+		for(int i = 0; i < k.getItems().size(); i++) {
+			for(int j = 0; j < this.itemsLeft.size(); j++) {
+				if(k.getItems().get(i).getItemNbr() == itemsLeft.get(j).getItemNbr()) {
+					itemsLeft.remove(j);
+				}
+			}
+		}
+	}
 	public double getTotalValue() {
 		return this.totalValue;
 	}
@@ -43,6 +53,7 @@ public class Neighbour {
 	public ArrayList<Item> getItemsLeft() {
 		return (ArrayList<Item>) itemsLeft.clone();
 	}
+	
 	
 	
 
