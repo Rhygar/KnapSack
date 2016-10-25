@@ -54,6 +54,13 @@ public class Neighbour {
 		return (ArrayList<Item>) itemsLeft.clone();
 	}
 	
+	public void printItemsLeft() {
+		String str = "ITEMS LEFT: ";
+		for(int i = 0; i < itemsLeft.size(); i++) {
+			str += itemsLeft.get(i).getItemNbr() + " ";
+		}
+		System.out.println(str);
+	}
 	
 	
 

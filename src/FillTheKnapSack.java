@@ -33,7 +33,9 @@ public class FillTheKnapSack {
 			if(bestFoundSolution.getTotalValue() > currentSolution.getTotalValue()) {
 				currentSolution = bestFoundSolution;
 				System.out.println("UPDATED SOLUTION with total value: " + currentSolution.getTotalValue());
+				
 				printKnapSacks(currentSolution.getKnapSacks());
+				currentSolution.printItemsLeft();
 			}
 			findNeighbours(currentSolution);
 			System.out.println("Neighbours found: " + neighbours.size());
