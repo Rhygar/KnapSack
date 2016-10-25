@@ -11,7 +11,6 @@ public class FillTheKnapSack {
 	ArrayList<Item> items = new ArrayList<Item>();
 	ArrayList<Item> itemsLeft = new ArrayList<Item>();
 	ArrayList<Neighbour> neighbours;
-	Neighbour bestNeighbour;
 	Item itemAddedinNewBestNeighbour;
 
 	public FillTheKnapSack() throws IOException {
@@ -24,42 +23,43 @@ public class FillTheKnapSack {
 	}
 	
 	public Neighbour getBestNeighbour() {
+		Neighbour currentSolution = new Neighbour(knapSacks, itemsLeft, null, null, null);
+		Neighbour bestFoundSolution = new Neighbour(knapSacks, itemsLeft, null, null, null);
+		System.out.println("Current value in sacks: " + currentSolution.getTotalValue());
 		//determine current total value
-		double bestTotalValue = new Neighbour(knapSacks, items, null, null).getTotalValue();
-		System.out.println("Total value is...:" + bestTotalValue);
-		double highestValueInNeighbours = bestTotalValue + 1;
-		while(highestValueInNeighbours >= bestTotalValue) {
-			//determine neighbourhood
-			findNeighbours();
-			System.out.println("Number of found neighbours: " + neighbours.size());
-			//iterate through all points in neighbourhood and take the N(x) which is highest
-			highestValueInNeighbours = 0;
+		
+		do {
+			if(bestFoundSolution.getTotalValue() > currentSolution.getTotalValue()) {
+				currentSolution = bestFoundSolution;
+				System.out.println("UPDATED SOLUTION with total value: " + currentSolution.getTotalValue());
+			}
+			findNeighbours(currentSolution);
+			double highestValueInNeighbours = 0;
 			for(Neighbour N : this.neighbours) {
 				if(N.getTotalValue() > highestValueInNeighbours) {
 					highestValueInNeighbours = N.getTotalValue();
+					bestFoundSolution = N;
 					printKnapSacks(N.getKnapSacks());
-					
+					printItemsLeft();
 				}
 			}
-			//if N(x) > current total value, update current to best neighbour, continue looping
-			if(highestValueInNeighbours > bestTotalValue) {
-				bestTotalValue = highestValueInNeighbours;
-			}
-		}
-		return null;
+		} while(bestFoundSolution.getTotalValue() > currentSolution.getTotalValue());
+
+		return currentSolution;
 	}
 	
-	public Neighbour findNeighbours() {
+	public void findNeighbours(Neighbour currentSolution) {
 		neighbours = new ArrayList<Neighbour>();
-		
+		ArrayList<Item> itemsLeft = currentSolution.getItemsLeft();
+		ArrayList<KnapSack> knapSacks = currentSolution.getKnapSacks();
 		//for every knapsack
 		for(KnapSack k1 : knapSacks) {
 			//for every knapsack
 			for(KnapSack k2 : knapSacks) {
 				//if not looking at same knapsack
 				if(k1.getKnapSackNbr() != k2.getKnapSackNbr()) {
-					KnapSack tempK1 = cloneKnapSack(k1);
-					KnapSack tempK2 = cloneKnapSack(k2);
+					KnapSack tempK1 = new KnapSack(k1);
+					KnapSack tempK2 = new KnapSack(k2);
 					//for every item in k1
 					for(int i = 0; i < tempK1.getItems().size(); i++) {
 						Item itemToMove = tempK1.getItems().get(i);
@@ -73,7 +73,7 @@ public class FillTheKnapSack {
 								if(tempK1.addItem(IL) != -1) {
 									//succeed! neighbour found
 									ArrayList<KnapSack> cloneKS = (ArrayList<KnapSack>) knapSacks.clone();
-									neighbours.add(new Neighbour(knapSacks, items, tempK1, tempK2));
+									neighbours.add(new Neighbour(knapSacks, itemsLeft, IL, tempK1, tempK2));
 									tempK1.remove(IL);
 								}
 							}
@@ -94,7 +94,7 @@ public class FillTheKnapSack {
 											//succeed! neighbour found
 //											neighbours.add(new Neighbour(knapSacks, items, tempK1, tempK2));
 											ArrayList<KnapSack> cloneKS = (ArrayList<KnapSack>) knapSacks.clone();
-											neighbours.add(new Neighbour(knapSacks, items, tempK1, tempK2));
+											neighbours.add(new Neighbour(knapSacks, itemsLeft, IL, tempK1, tempK2));
 											tempK1.remove(IL);
 										}
 									}
@@ -104,14 +104,16 @@ public class FillTheKnapSack {
 					}
 				}
 			}
-		} return bestNeighbour;
+		}
 	}	
 	
 	public void greedAlg() {
 		Item bestItem;
 		while(!items.isEmpty()) {
 			
-			bestItem = getBestBenefitItem(this.items);
+//			bestItem = getBestBenefitItem(this.items);
+//			bestItem = getBestValueItem(this.items);
+			bestItem = getHighestWeightItem(this.items);
 			double returnValue = -1;
 			int index = 0;
 			while(returnValue == -1 && index < knapSacks.size()) {
@@ -159,6 +161,33 @@ public class FillTheKnapSack {
 		}
 		return highestBenefitItem;
 	}
+	
+	public Item getBestValueItem(ArrayList<Item> items) {
+		double highestValue = 0;
+		Item highestValueItem = null;
+		for(Item i : items) {
+			if(i.getValue() > highestValue) {
+				highestValue = i.getValue();
+				highestValueItem = i;
+			}
+		}
+		return highestValueItem;
+	}
+	
+	public Item getHighestWeightItem(ArrayList<Item> items) {
+		double highestWeight = 0;
+		Item highestWeightItem = null;
+		for(Item i : items) {
+			if(i.getWeight() > highestWeight) {
+				highestWeight = i.getWeight();
+				highestWeightItem = i;
+			}
+		}
+		return highestWeightItem;
+	}
+	
+	
+	
 	public void readKnapSacksAndItemsFromFile() throws NumberFormatException, IOException {
 		BufferedReader br = new BufferedReader(new FileReader("src/knapsacks_and_items.txt"));
 		
