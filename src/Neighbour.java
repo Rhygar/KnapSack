@@ -54,12 +54,25 @@ public class Neighbour {
 		return (ArrayList<Item>) itemsLeft.clone();
 	}
 	
-	public void printItemsLeft() {
-		String str = "ITEMS LEFT: ";
+	public String printItemsLeft() {
+		String str = "Items not fit in any knapsack: ";
 		for(int i = 0; i < itemsLeft.size(); i++) {
 			str += itemsLeft.get(i).getItemNbr() + " ";
 		}
-		System.out.println(str);
+		return str;
+	}
+	
+	public String toString() {
+		String str = "Total value of solution: " + this.totalValue + "\n\n";
+		for(KnapSack k : this.knapSacks) {
+			str += "Knapsack: " + k.getKnapSackNbr() + ", Value: " + k.getCurrentValue() + ", Weight: " + k.getCurrentWeight() + "\n";
+			str += "Items included: \n";
+			for(Item i : k.getItems()) {
+				str += "Item: " + i.getItemNbr() + ", value: " + i.getValue() + ", weight: " + i.getWeight() + "\n";
+			} str += "\n";
+		}
+		str += printItemsLeft();
+		return str;
 	}
 	
 	

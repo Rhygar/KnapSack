@@ -26,16 +26,15 @@ public class FillTheKnapSack {
 	public Neighbour getBestNeighbour() {
 		Neighbour currentSolution = new Neighbour(knapSacks, allItems, null, null);
 		Neighbour bestFoundSolution = new Neighbour(knapSacks, allItems, null, null);
+		System.out.println("\n********** Neigbourhood search started **********\n");
 		System.out.println("Current value in sacks: " + currentSolution.getTotalValue());
 		//determine current total value
 		
 		do {
 			if(bestFoundSolution.getTotalValue() > currentSolution.getTotalValue()) {
 				currentSolution = bestFoundSolution;
-				System.out.println("UPDATED SOLUTION with total value: " + currentSolution.getTotalValue());
-				
-				printKnapSacks(currentSolution.getKnapSacks());
-				currentSolution.printItemsLeft();
+				System.out.println("\n********** New solution found **********\n");
+				System.out.println(currentSolution.toString());
 			}
 			findNeighbours(currentSolution);
 			System.out.println("Neighbours found: " + neighbours.size());
@@ -117,6 +116,7 @@ public class FillTheKnapSack {
 	}	
 	
 	public void greedAlg() {
+		System.out.println("\n********** Greedy algorithm search started **********\n");
 		Item bestItem;
 		while(!items.isEmpty()) {
 			
@@ -137,7 +137,7 @@ public class FillTheKnapSack {
 			}
 			items.remove(bestItem);
 		}
-		System.out.println("\nFinished with Greedy Algorithm!\n");
+		System.out.println("\n********** Greedy algorithm finished! **********\nRESULT:\n");
 		printKnapSacks();
 		printItemsLeft();
 	}
@@ -225,9 +225,10 @@ public class FillTheKnapSack {
 	}
 	
 	public void printItemsLeft() {
+		String str = "Items not fit in any knapsack: ";
 		for(Item i : itemsLeft) {
-			System.out.println("ItemNumber: " + i.getItemNbr());
-		}
+			str += i.getItemNbr() + " ";
+		} System.out.println(str);
 	}
 	
 	public void printKnapSacks() {
@@ -254,14 +255,21 @@ public class FillTheKnapSack {
 	
 	
 	public void printSacks() {
+		int index = 0;
+		System.out.println("********** Knapsacks **********");
 		for(KnapSack k : knapSacks) {
-			System.out.println(k.getMaxWeight());
+			System.out.println("Knapsack: " + knapSacks.get(index).getKnapSackNbr() + ", Max capacity weight: " + k.getMaxWeight());
+			index++;
 		}
-	}
+		System.out.println("");
+	} 
+	
 	public void printItems() {
+		System.out.println("********** Items **********");
 		for(Item i : items) {
 			System.out.println("ItemNumber: " + i.getItemNbr() +  ", Value: " + i.getValue() + ", Weight: " + i.getWeight() + ", Benefit: " + i.getBenefit());
 		}
+		System.out.println("");
 	}
 	
 	public static void main(String []args) throws IOException {
