@@ -1,7 +1,9 @@
 import java.io.BufferedReader;
 import java.io.FileNotFoundException;
+import java.io.FileOutputStream;
 import java.io.FileReader;
 import java.io.IOException;
+import java.io.PrintStream;
 import java.util.ArrayList;
 
 
@@ -16,6 +18,13 @@ public class FillTheKnapSack {
 
 	public FillTheKnapSack() throws IOException {
 		readKnapSacksAndItemsFromFile();
+		//prints all outputs into a file output.txt. Contains the decision tree
+		try {
+			System.setOut(new PrintStream(new FileOutputStream("src/output1.txt")));
+		} catch (FileNotFoundException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
 		
 	}
 	
@@ -56,11 +65,21 @@ public class FillTheKnapSack {
 		neighbours = new ArrayList<Neighbour>();
 //		ArrayList<Item> itemsLeft = currentSolution.getItemsLeft();
 		ArrayList<KnapSack> knapSacks = currentSolution.getKnapSacks();
+		ArrayList<Item> itemsLeft = currentSolution.getItemsLeft();
+		//check if possible to fit in any itemLeft in any knapsack
+		for(Item i : itemsLeft) {
+			for(KnapSack k : knapSacks) {
+				if(k.addItem(i) != -1) {
+					neighbours.add(new Neighbour(knapSacks, allItems, k, null));
+					k.remove(i);
+				}
+			}
+		}
 		//for every knapsack
 		for(KnapSack k1 : knapSacks) {
 			//for every knapsack
 			for(KnapSack k2 : knapSacks) {
-				ArrayList<Item> itemsLeft = currentSolution.getItemsLeft();
+				itemsLeft = currentSolution.getItemsLeft();
 				//if not looking at same knapsack
 				if(k1.getKnapSackNbr() != k2.getKnapSackNbr()) {
 //					System.out.println("K1: " + k1.getKnapSackNbr());
@@ -142,13 +161,13 @@ public class FillTheKnapSack {
 		printItemsLeft();
 	}
 	
-	public KnapSack cloneKnapSack(KnapSack ks) {
-		KnapSack clone = new KnapSack(ks.getMaxWeight(),ks.getKnapSackNbr());
-		for(int i = 0; i < ks.getItems().size(); i++) {
-			clone.addItem(ks.getItems().get(i));
-		}
-		return clone;
-	}
+//	public KnapSack cloneKnapSack(KnapSack ks) {
+//		KnapSack clone = new KnapSack(ks.getMaxWeight(),ks.getKnapSackNbr());
+//		for(int i = 0; i < ks.getItems().size(); i++) {
+//			clone.addItem(ks.getItems().get(i));
+//		}
+//		return clone;
+//	}
 	
 	public ArrayList<KnapSack> cloneKnapSackList(ArrayList<KnapSack> knapSacks) {
 		ArrayList<KnapSack> clonedList = new ArrayList<KnapSack>(knapSacks.size());
@@ -194,8 +213,6 @@ public class FillTheKnapSack {
 		}
 		return highestWeightItem;
 	}
-	
-	
 	
 	public void readKnapSacksAndItemsFromFile() throws NumberFormatException, IOException {
 		BufferedReader br = new BufferedReader(new FileReader("src/knapsacks_and_items.txt"));
