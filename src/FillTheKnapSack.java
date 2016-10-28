@@ -12,6 +12,11 @@ import java.util.ArrayList;
  * the first visited local optima.
  * 
  * The class reads the file knapsacks_and_items.txt included in this package.
+ * First line in text file are the knapsacks. Each knapsack are is declared by a number,
+ * which represents its max capacity. Knapsacks are separated with blanks.
+ * 
+ * The rows after are items. 
+ * Syntax for items in the text file are [itemNumber] [Value] [Weight]
  * 
  * The result is written in the file output.txt in this package. 
  *  
@@ -145,6 +150,11 @@ public class FillTheKnapSack {
 		}
 	}	
 	
+	/**
+	 * This method performs the greedy algorithm on the items and knapsacks.
+	 * 3 different modes of choosing best item are implemented, by benefit, by value, or by weight. 
+	 * 
+	 */
 	public void greedAlg() {
 		System.out.println("\n********** Greedy algorithm search started **********\n");
 		Item bestItem;

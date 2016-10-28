@@ -1,17 +1,23 @@
 import java.util.ArrayList;
 
-
+/**
+ * This class is a neighbour but also a solution to a knapsack problem. 
+ * It contains information about total value and weight of the knapsacks.
+ * It also holds information about what items are not included in the knapsacks.
+ * 
+ * @author David Tran & John Tengvall
+ * @date 25-10-16
+ *
+ */
 public class Neighbour {
 	
-	private double[][] knapSackMatrix;
 	private double totalWeight = 0;
 	private double totalValue = 0;
 	private ArrayList<Item> itemsLeft;
 	private ArrayList<KnapSack> knapSacks = new ArrayList<KnapSack>();
 	
-	public Neighbour() {
-		
-	}
+	public Neighbour() {}
+	
 	public Neighbour(ArrayList<KnapSack> ksList, ArrayList<Item> allItems, KnapSack k1, KnapSack k2) {
 		KnapSack currentKnapSack;
 		this.itemsLeft = (ArrayList<Item>) allItems.clone();
@@ -29,6 +35,11 @@ public class Neighbour {
 		}
 	}
 	
+	/**
+	 * This method iterates through the knapsack to see what items are 
+	 * inside and updates the list of items left outside. 
+	 * @param k the knapsack 
+	 */
 	private void removeFromItemList(KnapSack k) {
 		for(int i = 0; i < k.getItems().size(); i++) {
 			for(int j = 0; j < this.itemsLeft.size(); j++) {
