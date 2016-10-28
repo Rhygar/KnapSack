@@ -6,7 +6,19 @@ import java.io.IOException;
 import java.io.PrintStream;
 import java.util.ArrayList;
 
-
+/**
+ * This class solves the multiple knapsack problem by using greedy algorithm and 
+ * neighbourhood search. Though no tabu list is used, so the program will only find 
+ * the first visited local optima.
+ * 
+ * The class reads the file knapsacks_and_items.txt included in this package.
+ * 
+ * The result is written in the file output.txt in this package. 
+ *  
+ * @author David Tran & John Tengvall
+ * @date 25-10-16
+ *
+ */
 public class FillTheKnapSack {
 	boolean firstLineInFile = true;
 	ArrayList<KnapSack> knapSacks = new ArrayList<KnapSack>();
@@ -20,22 +32,25 @@ public class FillTheKnapSack {
 		readKnapSacksAndItemsFromFile();
 		//prints all outputs into a file output.txt. Contains the decision tree
 		try {
-			System.setOut(new PrintStream(new FileOutputStream("src/output1.txt")));
+			System.setOut(new PrintStream(new FileOutputStream("src/output.txt")));
 		} catch (FileNotFoundException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
-		
 	}
 	
-	public void neighbourhoodSearchAlg() {
-		
+	public void run() {
+		printSacks();
+		printItems();
+		greedAlg();
+		getBestNeighbour();
+		System.out.println("\n********** Local optima found, program stopped **********");
 	}
 	
 	public Neighbour getBestNeighbour() {
 		Neighbour currentSolution = new Neighbour(knapSacks, allItems, null, null);
 		Neighbour bestFoundSolution = new Neighbour(knapSacks, allItems, null, null);
-		System.out.println("\n********** Neigbourhood search started **********\n");
+		System.out.println("\n********** Neighbourhood search started **********\n");
 		System.out.println("Current value in sacks: " + currentSolution.getTotalValue());
 		//determine current total value
 		
@@ -52,10 +67,9 @@ public class FillTheKnapSack {
 				if(N.getTotalValue() > highestValueInNeighbours) {
 					highestValueInNeighbours = N.getTotalValue();
 					bestFoundSolution = N;
-//					printKnapSacks(N.getKnapSacks());
-//					printItemsLeft();
 				}
 			}
+			System.out.println("Best value among found neighbours: " + bestFoundSolution.getTotalValue());
 		} while(bestFoundSolution.getTotalValue() > currentSolution.getTotalValue());
 
 		return currentSolution;
@@ -63,7 +77,6 @@ public class FillTheKnapSack {
 	
 	public void findNeighbours(Neighbour currentSolution) {
 		neighbours = new ArrayList<Neighbour>();
-//		ArrayList<Item> itemsLeft = currentSolution.getItemsLeft();
 		ArrayList<KnapSack> knapSacks = currentSolution.getKnapSacks();
 		ArrayList<Item> itemsLeft = currentSolution.getItemsLeft();
 		//check if possible to fit in any itemLeft in any knapsack
@@ -82,8 +95,6 @@ public class FillTheKnapSack {
 				itemsLeft = currentSolution.getItemsLeft();
 				//if not looking at same knapsack
 				if(k1.getKnapSackNbr() != k2.getKnapSackNbr()) {
-//					System.out.println("K1: " + k1.getKnapSackNbr());
-//					System.out.println("K2: " + k2.getKnapSackNbr());
 					KnapSack tempK1 = new KnapSack(k1);
 					KnapSack tempK2 = new KnapSack(k2);
 					//for every item in k1
@@ -161,29 +172,10 @@ public class FillTheKnapSack {
 		printItemsLeft();
 	}
 	
-//	public KnapSack cloneKnapSack(KnapSack ks) {
-//		KnapSack clone = new KnapSack(ks.getMaxWeight(),ks.getKnapSackNbr());
-//		for(int i = 0; i < ks.getItems().size(); i++) {
-//			clone.addItem(ks.getItems().get(i));
-//		}
-//		return clone;
-//	}
-	
-	public ArrayList<KnapSack> cloneKnapSackList(ArrayList<KnapSack> knapSacks) {
-		ArrayList<KnapSack> clonedList = new ArrayList<KnapSack>(knapSacks.size());
-		for(KnapSack k : knapSacks) {
-			clonedList.add(new KnapSack(k));
-		}
-		return clonedList;
-	}
-	
-	
 	public Item getBestBenefitItem(ArrayList<Item> items) {
-		double highestBenefit = 0;
-		Item highestBenefitItem = null;
+		Item highestBenefitItem = items.get(0);
 		for(Item i : items) {
-			if(i.getBenefit() > highestBenefit) {
-				highestBenefit = i.getBenefit();
+			if(i.getBenefit() > highestBenefitItem.getBenefit()) {
 				highestBenefitItem = i;
 			}
 		}
@@ -191,11 +183,9 @@ public class FillTheKnapSack {
 	}
 	
 	public Item getBestValueItem(ArrayList<Item> items) {
-		double highestValue = 0;
-		Item highestValueItem = null;
+		Item highestValueItem = items.get(0);
 		for(Item i : items) {
-			if(i.getValue() > highestValue) {
-				highestValue = i.getValue();
+			if(i.getValue() > highestValueItem.getValue()) {
 				highestValueItem = i;
 			}
 		}
@@ -203,11 +193,9 @@ public class FillTheKnapSack {
 	}
 	
 	public Item getHighestWeightItem(ArrayList<Item> items) {
-		double highestWeight = 0;
-		Item highestWeightItem = null;
+		Item highestWeightItem = items.get(0);
 		for(Item i : items) {
-			if(i.getWeight() > highestWeight) {
-				highestWeight = i.getWeight();
+			if(i.getWeight() > highestWeightItem.getWeight()) {
 				highestWeightItem = i;
 			}
 		}
@@ -226,7 +214,6 @@ public class FillTheKnapSack {
 				for(int j = 0; j < splitString.length; j++) {
 					knapSacks.add(new KnapSack(Double.parseDouble(splitString[j]), j));
 				}
-				
 			} else {
 				//read rest of lines which are the items.  itemNumber, 
 				String[] splitString = str.split(" ");
@@ -249,6 +236,11 @@ public class FillTheKnapSack {
 	}
 	
 	public void printKnapSacks() {
+		int totValue = 0;
+		for(KnapSack k : this.knapSacks) {
+			totValue += k.getCurrentValue();
+		}
+		System.out.println("Total value of solution: " + totValue + "\n");
 		for(KnapSack k : this.knapSacks) {
 			System.out.println("Knapsack: " + k.getKnapSackNbr() + ", Value: " + k.getCurrentValue() + ", Weight: " + k.getCurrentWeight());
 			System.out.println("Items included: ");
@@ -272,29 +264,28 @@ public class FillTheKnapSack {
 	
 	
 	public void printSacks() {
-		int index = 0;
+		int index = 0, totalCap = 0;
 		System.out.println("********** Knapsacks **********");
 		for(KnapSack k : knapSacks) {
 			System.out.println("Knapsack: " + knapSacks.get(index).getKnapSackNbr() + ", Max capacity weight: " + k.getMaxWeight());
-			index++;
+			totalCap += knapSacks.get(index).getMaxWeight();
+			
 		}
-		System.out.println("");
+		System.out.println("\nTotal capacity of knapsacks: " + totalCap + "\n");
 	} 
 	
 	public void printItems() {
 		System.out.println("********** Items **********");
+		int totalWeight = 0;
 		for(Item i : items) {
 			System.out.println("ItemNumber: " + i.getItemNbr() +  ", Value: " + i.getValue() + ", Weight: " + i.getWeight() + ", Benefit: " + i.getBenefit());
+			totalWeight += i.getWeight();
 		}
-		System.out.println("");
+		System.out.println("\nTotal weight of items: " + totalWeight + "\n");
 	}
 	
 	public static void main(String []args) throws IOException {
 		FillTheKnapSack prog = new FillTheKnapSack();
-		prog.printSacks();
-		prog.printItems();
-		prog.greedAlg();
-		prog.getBestNeighbour();
-		System.out.println("finito");
+		prog.run();
 	}
 }

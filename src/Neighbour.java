@@ -55,7 +55,7 @@ public class Neighbour {
 	}
 	
 	public String printItemsLeft() {
-		String str = "Items not fit in any knapsack: ";
+		String str = "Items (" + itemsLeft.size() + ") not fit in any knapsack: ";
 		for(int i = 0; i < itemsLeft.size(); i++) {
 			str += itemsLeft.get(i).getItemNbr() + " ";
 		}

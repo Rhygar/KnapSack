@@ -1,7 +1,11 @@
 ********** Knapsacks **********
 Knapsack: 0, Max capacity weight: 15.0
-Knapsack: 1, Max capacity weight: 15.0
-Knapsack: 2, Max capacity weight: 15.0
+Knapsack: 0, Max capacity weight: 15.0
+Knapsack: 0, Max capacity weight: 15.0
+Knapsack: 0, Max capacity weight: 15.0
+Knapsack: 0, Max capacity weight: 15.0
+
+Total capacity of knapsacks: 75
 
 ********** Items **********
 ItemNumber: 1, Value: 1.0, Weight: 7.0, Benefit: 0.14285714285714285
@@ -19,28 +23,40 @@ ItemNumber: 12, Value: 3.0, Weight: 2.0, Benefit: 1.5
 ItemNumber: 13, Value: 1.0, Weight: 4.0, Benefit: 0.25
 ItemNumber: 14, Value: 1.0, Weight: 2.0, Benefit: 0.5
 ItemNumber: 15, Value: 5.0, Weight: 6.0, Benefit: 0.8333333333333334
+ItemNumber: 16, Value: 3.0, Weight: 4.0, Benefit: 0.75
+ItemNumber: 17, Value: 6.0, Weight: 8.0, Benefit: 0.75
+ItemNumber: 18, Value: 5.0, Weight: 3.0, Benefit: 1.6666666666666667
+ItemNumber: 19, Value: 1.0, Weight: 4.0, Benefit: 0.25
+
+Total weight of items: 82
 
 
 ********** Greedy algorithm search started **********
 
 Item: 6 with value: 5.0 was added to knapsack: 0
 Item: 8 with value: 8.0 was added to knapsack: 1
+Item: 17 with value: 6.0 was added to knapsack: 2
 Item: 1 with value: 1.0 was added to knapsack: 0
 Item: 2 with value: 7.0 was added to knapsack: 1
 Item: 10 with value: 1.0 was added to knapsack: 2
-Item: 15 with value: 5.0 was added to knapsack: 2
-Item: 4 did not fit in any knapsack!
-Item: 13 did not fit in any knapsack!
-Item: 3 with value: 4.0 was added to knapsack: 2
-Item: 9 did not fit in any knapsack!
+Item: 15 with value: 5.0 was added to knapsack: 3
+Item: 4 with value: 6.0 was added to knapsack: 3
+Item: 13 with value: 1.0 was added to knapsack: 3
+Item: 16 with value: 3.0 was added to knapsack: 4
+Item: 19 with value: 1.0 was added to knapsack: 4
+Item: 3 with value: 4.0 was added to knapsack: 4
+Item: 9 with value: 7.0 was added to knapsack: 4
+Item: 18 did not fit in any knapsack!
 Item: 11 did not fit in any knapsack!
 Item: 12 did not fit in any knapsack!
 Item: 14 did not fit in any knapsack!
 Item: 5 with value: 1.0 was added to knapsack: 1
-Item: 7 did not fit in any knapsack!
+Item: 7 with value: 2.0 was added to knapsack: 2
 
 ********** Greedy algorithm finished! **********
 RESULT:
+
+Total value of solution: 58
 
 Knapsack: 0, Value: 6.0, Weight: 15.0
 Items included: 
@@ -53,46 +69,113 @@ Item: 8, value: 8.0, weight: 8.0
 Item: 2, value: 7.0, weight: 6.0
 Item: 5, value: 1.0, weight: 1.0
 
-Knapsack: 2, Value: 10.0, Weight: 15.0
+Knapsack: 2, Value: 9.0, Weight: 15.0
 Items included: 
+Item: 17, value: 6.0, weight: 8.0
 Item: 10, value: 1.0, weight: 6.0
+Item: 7, value: 2.0, weight: 1.0
+
+Knapsack: 3, Value: 12.0, Weight: 14.0
+Items included: 
 Item: 15, value: 5.0, weight: 6.0
+Item: 4, value: 6.0, weight: 4.0
+Item: 13, value: 1.0, weight: 4.0
+
+Knapsack: 4, Value: 15.0, Weight: 14.0
+Items included: 
+Item: 16, value: 3.0, weight: 4.0
+Item: 19, value: 1.0, weight: 4.0
 Item: 3, value: 4.0, weight: 3.0
+Item: 9, value: 7.0, weight: 3.0
 
-Items not fit in any knapsack: 4 13 9 11 12 14 7 
+Items not fit in any knapsack: 18 11 12 14 
 
-********** Neigbourhood search started **********
+********** Neighbourhood search started **********
 
-Current value in sacks: 32.0
-Neighbours found: 118
+Current value in sacks: 58.0
+Neighbours found: 280
+Best value among found neighbours: 62.0
 
 ********** New solution found **********
 
-Total value of solution: 38.0
+Total value of solution: 62.0
 
 Knapsack: 0, Value: 12.0, Weight: 14.0
 Items included: 
 Item: 6, value: 5.0, weight: 8.0
 Item: 2, value: 7.0, weight: 6.0
 
-Knapsack: 1, Value: 16.0, Weight: 12.0
+Knapsack: 1, Value: 14.0, Weight: 12.0
 Items included: 
 Item: 8, value: 8.0, weight: 8.0
 Item: 5, value: 1.0, weight: 1.0
+Item: 18, value: 5.0, weight: 3.0
+
+Knapsack: 2, Value: 9.0, Weight: 15.0
+Items included: 
+Item: 17, value: 6.0, weight: 8.0
+Item: 10, value: 1.0, weight: 6.0
+Item: 7, value: 2.0, weight: 1.0
+
+Knapsack: 3, Value: 12.0, Weight: 14.0
+Items included: 
+Item: 15, value: 5.0, weight: 6.0
+Item: 4, value: 6.0, weight: 4.0
+Item: 13, value: 1.0, weight: 4.0
+
+Knapsack: 4, Value: 15.0, Weight: 14.0
+Items included: 
+Item: 16, value: 3.0, weight: 4.0
+Item: 19, value: 1.0, weight: 4.0
+Item: 3, value: 4.0, weight: 3.0
 Item: 9, value: 7.0, weight: 3.0
 
-Knapsack: 2, Value: 10.0, Weight: 15.0
-Items included: 
-Item: 10, value: 1.0, weight: 6.0
-Item: 15, value: 5.0, weight: 6.0
-Item: 3, value: 4.0, weight: 3.0
-
-Items not fit in any knapsack: 1 4 7 11 12 13 14 
-Neighbours found: 99
+Items (4) not fit in any knapsack: 1 11 12 14 
+Neighbours found: 222
+Best value among found neighbours: 65.0
 
 ********** New solution found **********
 
-Total value of solution: 44.0
+Total value of solution: 65.0
+
+Knapsack: 0, Value: 12.0, Weight: 14.0
+Items included: 
+Item: 6, value: 5.0, weight: 8.0
+Item: 2, value: 7.0, weight: 6.0
+
+Knapsack: 1, Value: 17.0, Weight: 14.0
+Items included: 
+Item: 8, value: 8.0, weight: 8.0
+Item: 5, value: 1.0, weight: 1.0
+Item: 18, value: 5.0, weight: 3.0
+Item: 12, value: 3.0, weight: 2.0
+
+Knapsack: 2, Value: 9.0, Weight: 15.0
+Items included: 
+Item: 17, value: 6.0, weight: 8.0
+Item: 10, value: 1.0, weight: 6.0
+Item: 7, value: 2.0, weight: 1.0
+
+Knapsack: 3, Value: 12.0, Weight: 14.0
+Items included: 
+Item: 15, value: 5.0, weight: 6.0
+Item: 4, value: 6.0, weight: 4.0
+Item: 13, value: 1.0, weight: 4.0
+
+Knapsack: 4, Value: 15.0, Weight: 14.0
+Items included: 
+Item: 16, value: 3.0, weight: 4.0
+Item: 19, value: 1.0, weight: 4.0
+Item: 3, value: 4.0, weight: 3.0
+Item: 9, value: 7.0, weight: 3.0
+
+Items (3) not fit in any knapsack: 1 11 14 
+Neighbours found: 179
+Best value among found neighbours: 67.0
+
+********** New solution found **********
+
+Total value of solution: 67.0
 
 Knapsack: 0, Value: 13.0, Weight: 15.0
 Items included: 
@@ -100,96 +183,34 @@ Item: 6, value: 5.0, weight: 8.0
 Item: 2, value: 7.0, weight: 6.0
 Item: 5, value: 1.0, weight: 1.0
 
-Knapsack: 1, Value: 21.0, Weight: 15.0
+Knapsack: 1, Value: 18.0, Weight: 15.0
 Items included: 
 Item: 8, value: 8.0, weight: 8.0
-Item: 9, value: 7.0, weight: 3.0
-Item: 4, value: 6.0, weight: 4.0
-
-Knapsack: 2, Value: 10.0, Weight: 15.0
-Items included: 
-Item: 10, value: 1.0, weight: 6.0
-Item: 15, value: 5.0, weight: 6.0
-Item: 3, value: 4.0, weight: 3.0
-
-Items not fit in any knapsack: 1 7 11 12 13 14 
-Neighbours found: 113
-
-********** New solution found **********
-
-Total value of solution: 46.0
-
-Knapsack: 0, Value: 9.0, Weight: 11.0
-Items included: 
-Item: 6, value: 5.0, weight: 8.0
-Item: 5, value: 1.0, weight: 1.0
+Item: 18, value: 5.0, weight: 3.0
 Item: 12, value: 3.0, weight: 2.0
-
-Knapsack: 1, Value: 21.0, Weight: 15.0
-Items included: 
-Item: 8, value: 8.0, weight: 8.0
-Item: 9, value: 7.0, weight: 3.0
-Item: 4, value: 6.0, weight: 4.0
-
-Knapsack: 2, Value: 16.0, Weight: 15.0
-Items included: 
-Item: 15, value: 5.0, weight: 6.0
-Item: 3, value: 4.0, weight: 3.0
-Item: 2, value: 7.0, weight: 6.0
-
-Items not fit in any knapsack: 1 7 10 11 13 14 
-Neighbours found: 70
-
-********** New solution found **********
-
-Total value of solution: 48.0
-
-Knapsack: 0, Value: 16.0, Weight: 14.0
-Items included: 
-Item: 6, value: 5.0, weight: 8.0
-Item: 5, value: 1.0, weight: 1.0
-Item: 12, value: 3.0, weight: 2.0
-Item: 9, value: 7.0, weight: 3.0
-
-Knapsack: 1, Value: 16.0, Weight: 13.0
-Items included: 
-Item: 8, value: 8.0, weight: 8.0
-Item: 4, value: 6.0, weight: 4.0
-Item: 7, value: 2.0, weight: 1.0
-
-Knapsack: 2, Value: 16.0, Weight: 15.0
-Items included: 
-Item: 15, value: 5.0, weight: 6.0
-Item: 3, value: 4.0, weight: 3.0
-Item: 2, value: 7.0, weight: 6.0
-
-Items not fit in any knapsack: 1 10 11 13 14 
-Neighbours found: 66
-
-********** New solution found **********
-
-Total value of solution: 50.0
-
-Knapsack: 0, Value: 17.0, Weight: 15.0
-Items included: 
-Item: 6, value: 5.0, weight: 8.0
-Item: 12, value: 3.0, weight: 2.0
-Item: 9, value: 7.0, weight: 3.0
 Item: 11, value: 2.0, weight: 2.0
 
-Knapsack: 1, Value: 17.0, Weight: 14.0
+Knapsack: 2, Value: 9.0, Weight: 15.0
 Items included: 
-Item: 8, value: 8.0, weight: 8.0
-Item: 4, value: 6.0, weight: 4.0
+Item: 17, value: 6.0, weight: 8.0
+Item: 10, value: 1.0, weight: 6.0
 Item: 7, value: 2.0, weight: 1.0
-Item: 5, value: 1.0, weight: 1.0
 
-Knapsack: 2, Value: 16.0, Weight: 15.0
+Knapsack: 3, Value: 12.0, Weight: 14.0
 Items included: 
 Item: 15, value: 5.0, weight: 6.0
-Item: 3, value: 4.0, weight: 3.0
-Item: 2, value: 7.0, weight: 6.0
+Item: 4, value: 6.0, weight: 4.0
+Item: 13, value: 1.0, weight: 4.0
 
-Items not fit in any knapsack: 1 10 13 14 
-Neighbours found: 51
-finito
+Knapsack: 4, Value: 15.0, Weight: 14.0
+Items included: 
+Item: 16, value: 3.0, weight: 4.0
+Item: 19, value: 1.0, weight: 4.0
+Item: 3, value: 4.0, weight: 3.0
+Item: 9, value: 7.0, weight: 3.0
+
+Items (2) not fit in any knapsack: 1 14 
+Neighbours found: 101
+Best value among found neighbours: 67.0
+
+********** Local optima found, program stopped **********
